@@ -1,0 +1,34 @@
+extends layout 
+
+block main 
+  table 
+    tr 
+      th Course ID
+      th Period 
+      th Class Name 
+      th Teacher 
+      th Student Count
+    each cls in classList 
+      tr
+        td #{cls.course_id}
+        td #{cls.period}
+        td 
+          a(href=`/admin/course/${cls.course_id}`) #{cls.class_name}
+        td #{cls.teacher_name}
+        td #{cls.student_count}
+        td 
+          a(href=`/course/${cls.course_id}/drop-course?page=${paginationData.page}`)
+            button Drop Course
+  if paginationData.numberPages > 1
+    table.pagination
+      tr
+        - for (var i = 1; i <= paginationData.numberPages; ++i) {
+          td.pagination_data
+            if paginationData.page != i 
+              a(href!=`/admin?page=${i}`) #{i}
+            else 
+              p #{i}
+        - }
+  fieldset.actions
+    a(href="/admin/add-course" method="get")
+      button Add Course

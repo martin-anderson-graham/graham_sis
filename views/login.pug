@@ -1,0 +1,22 @@
+extends layout 
+
+block main 
+  form(action=`/users/login` method='post')
+    dl 
+      dt 
+        label(for='username') Username: 
+      dd 
+        input(type="text"
+              name="username"
+              value=username)
+    dl 
+      dt 
+        label(for="password") Password:
+      dd 
+        input(type="password"
+              name="password")
+    input(type="hidden" name="originalURL" value=originalURL)
+    fieldset.actions 
+      input(type="submit" value="Sign In") 
+
+block signOut

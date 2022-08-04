@@ -1,0 +1,28 @@
+{
+  "name": "graham_sis",
+  "version": "1.0.0",
+  "description": "A student information system",
+  "main": "sis.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start": "npx nodemon sis.js",
+    "sql-setup": "dropdb sis && createdb sis && psql -d sis < ./lib/schema.sql && psql -d sis < ./lib/seed-data.sql"  
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-loki": "^1.2.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.2",
+    "express-validator": "^6.14.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}

@@ -1,0 +1,30 @@
+doctype html
+
+html(lang="en-US")
+
+  head
+    title Graham-SIS
+    meta(charset="UTF-8")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Radio+Canada&display=swap")
+    link(rel="stylesheet" href="/stylesheets/whitespace-reset.css")
+    link(rel="stylesheet" href="/stylesheets/application.css")
+    link(rel="shortcut icon" href="/img/favicon.ico")
+
+  body 
+    header 
+      h1 Welcome to GRAHAM-SIS -- #{fullName}
+
+    main
+      - let kinds = Object.keys(flash || {});
+      if kinds.length > 0
+        ul
+          each kind in kinds
+            each message in flash[kind]
+              li.flash(class=kind)= message
+      block main
+
+  footer 
+    block signOut
+      form(action="/users/logout" method="post")
+        fieldset.actions
+          input(type = "submit" value = "Sign Out")

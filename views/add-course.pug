@@ -1,0 +1,46 @@
+extends layout 
+block main
+  form(action="/admin/add-course" method = "post")
+    table 
+      tr
+        td Course Name: 
+        td  
+          input(type="text" name="course_name" value=course_name)
+      tr
+        td Course Period: 
+        td 
+          input(type="list" list="periods" name="period" value=period)
+          datalist(id="periods")
+            each val in [1,2,3,4,5,6,7,8]
+              option(value=val)
+      tr 
+        table 
+          tr 
+            th Create a new teacher: 
+            th 
+            th Select a teacher:
+          tr 
+            td 
+              table 
+                tr 
+                  td Username: 
+                  td 
+                    input(type="text" name="username" value=newUsername)
+                tr
+                  td Full Name: 
+                  td 
+                    input(type="text" name="fullName" value=newFullName)
+                    
+            td OR 
+            td 
+              input(type="list" list="current_teachers" name="current_teacher")
+              datalist(id="current_teachers")
+                each teacher in currentTeachers 
+                  option(value=teacher.id label=teacher.name)
+
+
+
+    fieldset.actions
+      input(type="submit" value="Submit")
+      a(href=`/`)
+        button(type="button") Return Home

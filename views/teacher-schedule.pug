@@ -1,0 +1,13 @@
+extends layout 
+
+block main 
+  table.schedule
+    tr 
+      th Period: 
+      th Class: 
+    each cls in teacherSchedule 
+      tr 
+        td #{cls.period}
+        td 
+          a(href=`/teacher?period=${cls.period}`) #{cls.name}
+

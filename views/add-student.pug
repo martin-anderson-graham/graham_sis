@@ -1,0 +1,25 @@
+extends layout 
+
+block main 
+  form(action=`/course/${courseID}/add-student` method='post')
+    input(type="hidden" value=period name="period")
+    table 
+      tr 
+        td Student's username: 
+        td 
+          input(type="text" name="username")
+      tr
+        td Student's full name: 
+        td 
+          input(type="text" name="studentname" value=studentName || '')
+      tr 
+        td Student's grade level: 
+        td 
+          input(type="number" min=9 max=12 name ="gradelevel" value=gradeLevel)
+      tr 
+        td Student's current grade:
+        td 
+          input(type="number" min=0 max=100 step=0.1 name="grade" value=grade)
+
+    fieldset.actions 
+      input(type="submit" value="Submit")

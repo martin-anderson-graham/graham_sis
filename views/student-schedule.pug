@@ -1,0 +1,23 @@
+extends layout 
+
+block main 
+  h3 #{studentName}'s Schedule - Grade Level: #{studentGradeLevel}th
+  table.schedule 
+    tr 
+      th Period:
+      th Course: 
+      th Teacher: 
+      if showGrades
+        th Grade:
+    each cls in schedule 
+      tr
+        td #{cls.period}
+        td #{cls.coursename}
+        td #{cls.teachername} 
+        if showGrades
+          td #{cls.grade}
+
+  fieldset.actions 
+    a(href="/")
+      button Return Home
+

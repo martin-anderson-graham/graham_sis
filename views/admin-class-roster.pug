@@ -1,0 +1,61 @@
+extends layout 
+
+block main 
+
+  h3 Welcome to #{classInfo.coursename} taught by #{classInfo.teachername}
+
+  form(action=`/admin/course/${courseID}/update` method = 'post')
+    table 
+      tr 
+        td 
+          input(type="text" name="newCourseName" placeHolder="Rename this course")
+        td 
+          input(type="submit" value="Update Course")
+
+  table.roster 
+      tr 
+        th Student Year: 
+        th Student Name: 
+        th Student Grade:
+      each student in roster 
+            tr 
+                td 
+                  p #{student.gradelevel}
+                td 
+                  a(href=`/student/${student.user_id}`) #{student.name}
+                td 
+                  p #{student.grade}
+                td 
+                  form(action=`/course/${courseID}/student/${student.student_id}/grade`
+                    method = 'post')
+                    input(type="number"
+                          name="grade"
+                          step= "0.01"
+                          min= "0"
+                          max= "100")
+                    input(type="hidden" name="period" value=currentPeriod)
+                    input(type="hidden" name="page" value=paginationData.page)
+                    td
+                      fieldset.actions 
+                        input(type="submit" value="Update")
+                td 
+                  form(action=`/course/${courseID}/student/${student.student_id}/drop` method='post')
+                    input(type="hidden" name="page" value=paginationData.page)
+                    input(type="hidden" name="period" value=currentPeriod)
+                    fieldset.actions 
+                      input(type="submit" value="Drop")
+  if paginationData.numberPages > 1
+    table.pagination
+      tr
+        - for (var i = 1; i <= paginationData.numberPages; ++i) {
+          td.pagination_data
+            if paginationData.page != i 
+              a(href!=`/admin/course/${courseID}?&page=${i}`) #{i}
+            else 
+              p #{i}
+        - } 
+  fieldset.actions
+    a(href=`/admin`)
+      button Return Home
+    a(href=`/course/${courseID}/add-student`)
+      button Add Student

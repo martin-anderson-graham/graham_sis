@@ -1,0 +1,78 @@
+extends layout 
+
+block main 
+
+  - let cPeriod = currentPeriod || 0;
+  table.teacher_periods 
+    tr 
+      td 
+        a(href = "/teacher?period="+'0') Schedule - 
+      each val in teacherSchedule
+        td 
+          if cPeriod != val.period
+            a(href = "/teacher?period="+val.period) #{val.period}
+          else 
+            p #{val.period}
+  
+  h3 === Period: #{cPeriod}   ===   #{classInfo.coursename} ===
+
+  if roster.length > 0
+    table.roster 
+      tr 
+        th Name: 
+        th Year: 
+        th Grade:
+      each student in roster 
+            tr 
+                td 
+                  a(href=`/student/${student.userid}`) #{student.name}
+                td 
+                  p #{student.gradelevel}
+                td 
+                  p #{student.grade}
+                td
+                  form(action=`/course/${student.course_id}/student/${student.student_id}/grade`
+                    method = 'post')
+                    input(type="number"
+                          name="grade"
+                          step= "0.01"
+                          min= "0"
+                          max= "100")
+                    input(type="hidden" name="period" value=currentPeriod)
+                    input(type="hidden" name="page" value=paginationData.page)
+                    td
+                      fieldset.actions 
+                        input(type="submit" value="Update")
+                td 
+                  form(action=`/course/${student.course_id}/student/${student.student_id}/drop` method='post')
+                    input(type="hidden" name="page" value=paginationData.page)
+                    input(type="hidden" name="period" value=currentPeriod)
+                    fieldset.actions 
+                      input(type="submit" value="Drop")
+    if paginationData.numberPages > 1
+      table.pagination
+        tr
+          - for (var i = 1; i <= paginationData.numberPages; ++i) {
+            td.pagination_data
+              if paginationData.page != i 
+                a(href!=`/teacher?period=${currentPeriod}&page=${i}`) #{i}
+              else 
+                p #{i}
+          - } 
+
+  table 
+    tr 
+      td 
+        a(href=`/course/${courseID}/add-student?period=${cPeriod}`)
+          button Add Student
+      td 
+        a(href=`/course/${courseID}/drop-course`)
+          button Drop Course
+      td 
+        form(action="/users/logout" method="post")
+          fieldset.actions
+            input(type = "submit" value = "Sign Out")
+block signOut         
+          
+          
+      
